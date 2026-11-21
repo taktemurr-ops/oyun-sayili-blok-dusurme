@@ -240,15 +240,18 @@ class DropGame {
     for (var x = 0; x < kDropCols; x++) {
       if (!canDrop(x)) continue;
       final g = clone();
-      final s = g.drop(x)!;
+      final s = g.drop(x);
+      if (s == null) continue;
       var v = s.points * 2.0 + g.maxExp * 30 - _height(g) * 6 - _rough(g) * 4;
       if (g.lost) v -= 1e6;
       // Bir adım ileri: sıradaki blok için en iyi sütun.
-      var look = -1e9;
-      for (var x2 = 0; x2 < kDropCols; x2++) {
+      if (g.won) v += 1e6;
+      var look = g.over ? 0.0 : -1e9;
+      for (var x2 = 0; x2 < kDropCols && !g.over; x2++) {
         if (!g.canDrop(x2)) continue;
         final g2 = g.clone();
-        final s2 = g2.drop(x2)!;
+        final s2 = g2.drop(x2);
+        if (s2 == null) continue;
         final v2 = s2.points * 1.5 - _height(g2) * 4 - (g2.lost ? 1e5 : 0);
         if (v2 > look) look = v2;
       }
