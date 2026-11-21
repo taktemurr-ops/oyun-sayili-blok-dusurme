@@ -1,0 +1,20 @@
+name: oyun_sayili_blok_dusurme
+description: "Sayılı Blok Düşürme – aynı sayıları birleştir, büyüt. Blok Oyunları merkez uygulamasının oyunu."
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  studio_core:
+    git:
+      url: https://github.com/taktemurr-ops/studio-core
+      ref: 6080e4b00e322e2191d0358100b4b48b4a1fc883
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
