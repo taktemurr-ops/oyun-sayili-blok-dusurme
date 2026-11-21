@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:studio_core/core/strings.dart';
 import 'package:studio_core/app/game_api.dart';
 import 'package:studio_core/app/services/audio.dart';
 import 'package:studio_core/core/game_rules.dart';
@@ -43,7 +44,6 @@ class _DropViewState extends State<DropView> {
   double _cell = 50;
 
   PlayContext get ctx => widget.ctx;
-  bool get _tr => ctx.lang == 'tr';
 
   @override
   void initState() {
@@ -155,9 +155,8 @@ class _DropViewState extends State<DropView> {
   Widget _hud() {
     final goal = level.targetExp;
     final label = goal == 0
-        ? (_tr ? 'Puan: ${game.score}' : 'Score: ${game.score}')
-        : (_tr ? 'Hedef: ${tileLabel(goal)} · En büyük: ${tileLabel(math.max(1, game.maxExp))}'
-            : 'Goal: ${tileLabel(goal)} · Best: ${tileLabel(math.max(1, game.maxExp))}');
+        ? (Strings.tx(ctx.lang, 'Puan: {0}', 'Score: {0}', [game.score]))
+        : (Strings.tx(ctx.lang, 'Hedef: {0} · En büyük: {1}', 'Goal: {0} · Best: {1}', [tileLabel(goal), tileLabel(math.max(1, game.maxExp))]));
     final left = level.moveLimit > 0 ? level.moveLimit - game.moves : null;
     final secs = level.timeLimit > 0 ? (level.timeLimit - _seconds).clamp(0, 9999) : _seconds;
     String two(int x) => x.toString().padLeft(2, '0');
