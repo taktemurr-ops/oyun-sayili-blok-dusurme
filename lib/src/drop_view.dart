@@ -11,9 +11,9 @@ import 'drop_rules.dart';
 
 /// Üsse göre renk: sıcaktan soğuğa uzanan kendi paletimiz.
 const _tileColors = [
-  Color(0xFF90A4AE), Color(0xFF4FC3F7), Color(0xFF4DB6AC), Color(0xFF81C784), Color(0xFFDCE775),
-  Color(0xFFFFD54F), Color(0xFFFFB74D), Color(0xFFFF8A65), Color(0xFFE57373), Color(0xFFF06292),
-  Color(0xFFBA68C8), Color(0xFF9575CD), Color(0xFF7986CB), Color(0xFF64B5F6), Color(0xFF4DD0E1),
+  Color(0xFF8C9BAB), Color(0xFF5FA8D3), Color(0xFF2BB3B1), Color(0xFF6BB26F), Color(0xFFB7C64A),
+  Color(0xFFF2C14E), Color(0xFFF2A93B), Color(0xFFF08A4B), Color(0xFFE2574C), Color(0xFFD9577F),
+  Color(0xFFB067B8), Color(0xFF8E6CC8), Color(0xFF5C70C4), Color(0xFF3075C4), Color(0xFF1B998B),
 ];
 
 Color tileColor(int e) => _tileColors[e % _tileColors.length];

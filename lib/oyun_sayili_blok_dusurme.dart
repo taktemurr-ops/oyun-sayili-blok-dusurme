@@ -80,7 +80,7 @@ final sayiliBlokConfig = GameConfig(
       'Gộp số giống nhau, làm chúng lớn lên!',
       'Pagsamahin ang magkaparehong numero, palakihin!',
     ],
-  seedColor: const Color(0xFFFF8A65),
+  seedColor: const Color(0xFFD2643F),
   icon: Icons.filter_9_plus_rounded,
   rules: DropRules(),
   buildPlay: (ctx) => DropView(ctx: ctx),
