@@ -6,9 +6,12 @@ import 'package:studio_core/core/strings.dart';
 import 'package:studio_core/app/game_api.dart';
 import 'package:studio_core/app/services/audio.dart';
 import 'package:studio_core/core/game_rules.dart';
+import 'package:studio_core/app/studio_ui.dart';
 
 import 'drop_engine.dart';
 import 'drop_rules.dart';
+
+final Map<StudioLook, ThemeData> _studioThemes = {};
 
 /// Üsse göre renk: sıcaktan soğuğa uzanan kendi paletimiz.
 const _tileColors = [
@@ -110,8 +113,15 @@ class _DropViewState extends State<DropView> {
     _persist();
   }
 
+  /// Oyun içi düğmeler, çipler ve yazılar onaylı koyu tasarımda (merkezin
+  /// paleti); tahta çizimi kendi renklerini korur.
   @override
   Widget build(BuildContext context) {
+    final look = StudioLook.of(context);
+    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: Builder(builder: _build));
+  }
+
+  Widget _build(BuildContext context) {
     return LayoutBuilder(builder: (context, cons) {
       _cell = math.max(24.0, math.min((cons.maxWidth - 24) / kDropCols, cons.maxHeight * 0.66 / (kDropRows + 1.3)));
       final w = _cell * kDropCols, h = _cell * kDropRows;
