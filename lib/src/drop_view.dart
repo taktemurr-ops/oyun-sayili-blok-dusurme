@@ -29,15 +29,29 @@ String tileLabel(int e) {
   return '$v';
 }
 
-class DropView extends StatefulWidget {
+/// Oyun ekranı: düğmeler, çipler, üst bilgi ve pencereler onaylı koyu
+/// tasarımda (merkezin paleti, studio-core StudioLook); tahta çizimi kendi
+/// renklerini korur.
+class DropView extends StatelessWidget {
   final PlayContext ctx;
   const DropView({super.key, required this.ctx});
 
   @override
-  State<DropView> createState() => _DropViewState();
+  Widget build(BuildContext context) {
+    final look = StudioLook.of(context);
+    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: DropViewBody(ctx: ctx));
+  }
 }
 
-class _DropViewState extends State<DropView> {
+class DropViewBody extends StatefulWidget {
+  final PlayContext ctx;
+  const DropViewBody({super.key, required this.ctx});
+
+  @override
+  State<DropViewBody> createState() => _DropViewState();
+}
+
+class _DropViewState extends State<DropViewBody> {
   late DropLevel level;
   late DropGame game;
   int? _hint;
@@ -113,15 +127,8 @@ class _DropViewState extends State<DropView> {
     _persist();
   }
 
-  /// Oyun içi düğmeler, çipler ve yazılar onaylı koyu tasarımda (merkezin
-  /// paleti); tahta çizimi kendi renklerini korur.
   @override
   Widget build(BuildContext context) {
-    final look = StudioLook.of(context);
-    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: Builder(builder: _build));
-  }
-
-  Widget _build(BuildContext context) {
     return LayoutBuilder(builder: (context, cons) {
       _cell = math.max(24.0, math.min((cons.maxWidth - 24) / kDropCols, cons.maxHeight * 0.66 / (kDropRows + 1.3)));
       final w = _cell * kDropCols, h = _cell * kDropRows;
