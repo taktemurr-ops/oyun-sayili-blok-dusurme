@@ -6,9 +6,12 @@ import 'package:studio_core/core/strings.dart';
 import 'package:studio_core/app/game_api.dart';
 import 'package:studio_core/app/services/audio.dart';
 import 'package:studio_core/core/game_rules.dart';
+import 'package:studio_core/app/studio_ui.dart';
 
 import 'drop_engine.dart';
 import 'drop_rules.dart';
+
+final Map<StudioLook, ThemeData> _studioThemes = {};
 
 /// Üsse göre renk: sıcaktan soğuğa uzanan kendi paletimiz.
 const _tileColors = [
@@ -26,15 +29,29 @@ String tileLabel(int e) {
   return '$v';
 }
 
-class DropView extends StatefulWidget {
+/// Oyun ekranı: düğmeler, çipler, üst bilgi ve pencereler onaylı koyu
+/// tasarımda (merkezin paleti, studio-core StudioLook); tahta çizimi kendi
+/// renklerini korur.
+class DropView extends StatelessWidget {
   final PlayContext ctx;
   const DropView({super.key, required this.ctx});
 
   @override
-  State<DropView> createState() => _DropViewState();
+  Widget build(BuildContext context) {
+    final look = StudioLook.of(context);
+    return Theme(data: _studioThemes[look] ??= buildStudioTheme(look), child: DropViewBody(ctx: ctx));
+  }
 }
 
-class _DropViewState extends State<DropView> {
+class DropViewBody extends StatefulWidget {
+  final PlayContext ctx;
+  const DropViewBody({super.key, required this.ctx});
+
+  @override
+  State<DropViewBody> createState() => _DropViewState();
+}
+
+class _DropViewState extends State<DropViewBody> {
   late DropLevel level;
   late DropGame game;
   int? _hint;
